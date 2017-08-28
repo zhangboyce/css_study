@@ -1,0 +1,66 @@
+body,div,li,h1,h2,h3,h4,h5,h6,form,input,textarea,p {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    margin:0;
+    padding:0;
+
+}
+
+ul > li {
+
+}
+
+a {
+    text-decoration:none;
+}
+
+pre {
+    text-align: left;
+    margin: 0 20%;
+}
+
+.fp-controlArrow {
+    display: none;
+}
+
+.section {
+    background-color: darkcyan;
+    color: azure;
+    text-align: center;
+}
+
+.section h1 {
+    padding-bottom: 20px;
+}
+
+
+.section1 .example1 > div {
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.section1 .example1 .div1 {
+    background-color: whitesmoke;
+}
+
+.section1 .example1 .div2 {
+    background-color: wheat;
+    padding: 15px;
+}
+
+.section1 .example1 .div3 {
+    background-color: #9d0006;
+    border: 25px solid whitesmoke;
+}
+
+.section1 .example1 .div4 {
+    background-color: #420e09;
+    border: 15px solid whitesmoke;
+    padding: 10px;
+    box-sizing: border-box;
+}
