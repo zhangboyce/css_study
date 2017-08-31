@@ -1,0 +1,26 @@
+.chapter1 .example1 > div {
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.chapter1 .example1 .div1 {
+    background-color: whitesmoke;
+}
+
+.chapter1 .example1 .div2 {
+    background-color: wheat;
+    padding: 15px;
+}
+
+.chapter1 .example1 .div3 {
+    background-color: #9d0006;
+    border: 25px solid whitesmoke;
+}
+
+.chapter1 .example1 .div4 {
+    background-color: #420e09;
+    border: 15px solid whitesmoke;
+    padding: 10px;
+    box-sizing: border-box;
+}

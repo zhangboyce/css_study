@@ -8,22 +8,12 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
-
-<div id="fullpage">
-    <div class="section" title="Page0">
-        <!--<h1>开始我的表演!</h1>-->
-        <img src="images/begin2.jpeg">
-    </div>
-    <div class="section section1" title="Chapter1-What is css?"></div>
-    <div class="section" title="Page2-">
-        <h1>Page2</h1>
-    </div>
-    <div class="section" title="Thanks">
-        <!--<h1>今天的逼就装到这里, 谢谢大家!</h1>-->
-        <img src="images/thanks.jpg">
+<div>
+    <ul id="menus"></ul>
+    <div id="fullpage">
+        <!-- chapters, jquery load articles -->
     </div>
 </div>
-
 </body>
 </html>
 
@@ -31,17 +21,58 @@
 <script type="text/javascript" src="vendor/fullPage/jquery.fullpage.min.js"></script>
 <script type="text/javascript" src="vendor/highlight/highlight.pack.js"></script>
 <script type="text/javascript">
-    $.get('articles/chapter1.html', function(response) {
-        $('.section1').html(response);
 
-        let $fullpage = $('#fullpage');
+    let chapters = [
+        'chapter0',
+        'chapter1',
+        'chapter2',
+        'chapter-last'
+    ];
+
+    let promises = chapters.map(function(chapter) {
+        return loadChapter(chapter)
+    });
+
+    let $fullpage = $('#fullpage');
+    let $menus = $('#menus');
+
+    Promise.all(promises).then(function (responses){
+        chapters.forEach(function(chapter, index) {
+            $fullpage.append(responses[index]);
+        });
+    }).then(function() {
+        initFullPage();
+        initHighlighting();
+    }).catch(function(e) {
+        console.error(e);
+    });
+
+    function loadChapter(chapter) {
+        return new Promise(function(res, rej) {
+            try {
+                $.get(`articles/${ chapter }.html`, function(response) {
+                    res(response);
+                });
+            } catch (e) {
+                rej(e);
+            }
+        });
+    }
+
+    function initFullPage() {
         let anchors = [].map.call($fullpage.children('.section'), function(section) { return $(section).attr('title') });
+        anchors.forEach(function(anchor) {
+            $menus.append(`<li data-menuanchor=${ anchor }><a href="#${ anchor }"></a></li>`);
+        });
+
         $fullpage.fullpage({
             anchors: anchors,
             css3: true,
+            menu: '#menus',
             scrollingSpeed: 800
         });
-
+    }
+    function initHighlighting() {
         hljs.initHighlightingOnLoad();
-    });
+    }
 </script>
