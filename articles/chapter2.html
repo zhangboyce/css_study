@@ -12,13 +12,60 @@
             </li>
             <li>
                 <p>
-                    <strong>嵌入样式: </strong>嵌入的CSS样式是放在HTML文档的head元素中的。
+                    <strong>嵌入样式: </strong>嵌入的CSS样式是放在HTML文档的head元素中的。嵌入样式的应用范围仅限于当前页面,嵌入样式会覆盖外部样式表(浏览器默认样式表,用户样式表,链接样式表)中的样式,但会被行内样式所覆盖。
                     <pre><code class="html">
-
+    &lt;head&gt;
+        &lt;style type="text/css"&gt;
+            h1 {font-size:16px;}
+            p {color:blue;}
+        &lt;/style&gt;
+    &lt;/head&gt;
                     </code></pre>
                 </p>
             </li>
-            <li>链接样式</li>
+            <li>
+                <p>
+                    <strong>链接样式: </strong>在HTML文档页面从外部引入一个扩展名为.css的文本文件, 这个文件就叫样式表。
+                    <pre><code class="html">
+    &lt;link href="styles.css" rel="stylesheet" type="text/css" /&gt;
+                    </code></pre>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="slide" data-anchor="CSS的基本语法">
+        <h1>CSS的基本语法</h1>
+        <img src="../images/css.jpg" width="30%">
+        <ul>
+            <li>
+                <p>
+                    <strong>为一个选择符设置多个样式: </strong>
+                    <pre><code class="css">
+    p { color:red; font-size:12px; font-weight:bold; }
+                    </code></pre>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>多个选择符设置相同的样式: </strong>
+                    <pre><code class="css">
+    h1 { color:blue; font-weight:bold; }
+    h2 { color:blue; font-weight:bold; }
+    h3 { color:blue; font-weight:bold; }
+
+    h1, h2, h3 { color:blue; font-weight:bold; }
+            </code></pre>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <strong>多条规则应用到一个选择符: </strong>
+                    <pre><code class="css">
+    h1, h2, h3 { color:blue; font-weight:bold; }
+    h3 { font-style:italic; }
+                    </code></pre>
+                </p>
+            </li>
         </ul>
     </div>
 </div>

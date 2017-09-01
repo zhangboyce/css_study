@@ -1,5 +1,9 @@
 @import "chapter1.css";
 
+html {
+    font-family: serif, '宋体', monospace, "Courier New";
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -9,15 +13,20 @@ ul {
     list-style: none;
     margin:0;
     padding:0;
-
 }
 
 a {
     text-decoration:none;
 }
 
+p {
+    text-align: left;
+}
+
 pre {
     text-align: left;
+    width: 100%;
+    font-size: 16px;
 }
 
 strong {
@@ -61,7 +70,7 @@ strong {
 }
 
 .section {
-    margin: 0 15%;
+    padding: 0 15%;
     text-align: center;
 }
 
