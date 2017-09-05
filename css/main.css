@@ -26,7 +26,7 @@ p {
 pre {
     text-align: left;
     width: 100%;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 strong {
@@ -34,13 +34,17 @@ strong {
     color: gold;
 }
 
+em {
+    color: crimson;
+}
+
 .fp-controlArrow {
     display: none;
 }
 
 #fullpage {
-    background-color: darkcyan;
-    color: azure;
+    background-color: black;
+    color: mediumturquoise;
 }
 
 #menus {
@@ -51,7 +55,7 @@ strong {
 }
 
 #menus > li {
-    background-color: rgba(157, 0, 6, 0.2);
+    background-color: rgba(157, 0, 6, 0.3);
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -70,10 +74,19 @@ strong {
 }
 
 .section {
-    padding: 0 15%;
+    margin: 0 15%;
     text-align: center;
 }
 
-.section h1 {
-    padding-bottom: 20px;
+.items .item {
+    text-align: left;
+}
+
+.items .item h1,
+.items .item h2,
+.items .item h3,
+.items .item h4,
+.items .item h5,
+.items .item h6 {
+    padding: 6px;
 }

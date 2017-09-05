@@ -41,8 +41,7 @@
             $fullpage.append(responses[index]);
         });
     }).then(function() {
-        initFullPage();
-        initHighlighting();
+        init();
     }).catch(function(e) {
         console.error(e);
     });
@@ -59,8 +58,40 @@
         });
     }
 
-    function initFullPage() {
-        let anchors = [].map.call($fullpage.children('.section'), function(section) { return $(section).attr('title') });
+    function init() {
+        let $sections = $fullpage.children('.section');
+        $.get('articles/code.xml', function(response) {
+            // parse code to map
+            let codes = response.getElementsByTagName('code');
+            let codeMap = {};
+            [].forEach.call(codes, function(code) {
+                let $code = $(code);
+                codeMap[$code.attr('data-target')] = $(code).html();
+            });
+
+            // write section code node html
+            [].forEach.call($sections, function (section) {
+                let $section = $(section);
+                let $codes = $section.find('code');
+                [].forEach.call($codes, function(code) {
+                    let $code = $(code);
+                    let text = codeMap[$code.attr('data-code')];
+                    if (!text || !text.trim()) return;
+                    if ($code.attr('class') == 'html') {
+                        $code.text(text);
+                    } else {
+                        $code.html(text);
+                    }
+                })
+            });
+
+            initHighlighting();
+            initFullPage($sections);
+        });
+    }
+
+    function initFullPage($sections) {
+        let anchors = [].map.call($sections, function(section) { return $(section).attr('title') });
         anchors.forEach(function(anchor) {
             $menus.append(`<li data-menuanchor=${ anchor }><a href="#${ anchor }"></a></li>`);
         });
@@ -72,7 +103,10 @@
             scrollingSpeed: 800
         });
     }
+
     function initHighlighting() {
-        hljs.initHighlightingOnLoad();
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     }
 </script>
