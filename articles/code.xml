@@ -141,20 +141,50 @@
         <ul id="menus"></ul>
     </code>
     <code data-target="chapter2-16">
-        input[name] { border: 1px solid #333; }
-        input[name="email"] { border: 1px solid #333; }
+        input[name] { /* */ }
+        input[name="email"] { /* */ }
 
-        /* 同时包含两个属性 */
-        span[name][title] { font-size: 16px; }
+        span[name][title] { /* 同时包含两个属性 */ }
 
-        /* 包含部分属性值 */
-        span[name~="def"] { /*  */ }
-
+        span[name~="def"] { /* 包含部分属性值 */ }
         span[name^="def"] { /*  */}
         span[name$="def"] { /*  */}
         span[name*="def"] { /*  */}
 
-        /* name=def or name starts with -def*/
-        span[name|="def"] { /*  */ }
+        span[name|="def"] { /* name=def or name starts with -def  */ }
+    </code>
+    <code data-target="chapter2-17">
+        a:link { /* */ }
+        a:visited { /* */ }
+        a:hover { /* */ }
+        a:active { /* */ }
+
+        input:focus { /* */ }
+        input[type="text"]:disabled { /* */ }
+        input[type="text"]:required { /* */ }
+        input[type="text"]:optional { /* */ }
+        input[type="text"]:invalid { /* */ }
+        input[type="text"]:valid { /* */ }
+    </code>
+    <code data-target="chapter2-18">
+        ul li:first-child { /* 选择某个元素的第一个子元素 */ }
+        ul li:last-child { /* 选择某个元素的最后一个子元素 */ }
+
+        ul li:nth-child(3) { /*  */ }
+        ul li:nth-child(n) { /*  */ }
+        ul li:nth-child(2n-1) { /*  */ }
+        ul li:nth-child(-n+5) { /*  */ }
+
+        ul li:nth-last-child(4n+1) { /*  */ }
+
+        /*
+            :nth-of-type()  选择指定的元素；
+            :nth-last-of-type()  选择指定的元素，从元素的最后一个开始计算；
+            :first-of-type  选择一个上级元素下的第一个同类子元素；
+            :last-of-type  选择一个上级元素的最后一个同类子元素；
+            :only-child  选择的元素是它的父元素的唯一一个了元素；
+            :only-of-type  选择一个元素是它的上级元素的唯一一个相同类型的子元素；
+            :empty  选择的元素里面没有任何内容。
+        */
     </code>
 </codes>
