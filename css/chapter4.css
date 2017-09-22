@@ -1,0 +1,160 @@
+.border-default-color {
+    background: whitesmoke;
+    width: 200px;
+    height: 100px;
+    color: red;
+    border: 5px solid;
+}
+
+.border-default-background-1 {
+    background: lightblue;
+    width: 100px;
+    height: 100px;
+    border: 30px dashed blue;
+}
+
+.border-default-background-2 {
+    background-image: url('../images/bg.jpg');
+    width: 100px;
+    height: 100px;
+    border: 30px solid rgba(255, 255, 255, .9);
+}
+
+.border-default-background-3 {
+    background-image: url('../images/bg.jpg');
+    background-clip: padding-box;
+    width: 100px;
+    height: 100px;
+    border: 30px solid rgba(255, 255, 255, .9);
+}
+
+.border-radius-1 {
+    width: 50px;
+    height: 50px;
+    border-top: 30px solid red;
+    border-left: 30px solid blue;
+    border-bottom: 30px solid grey;
+    border-right: 30px solid;
+}
+
+.border-radius-2 {
+    width: 25px;
+    height: 25px;
+    border-top: 50px solid red;
+    border-left: 50px solid blue;
+    border-bottom: 50px solid grey;
+    border-right: 50px solid;
+}
+
+.border-radius-3 {
+    width: 0;
+    height: 0;
+    border-top: 50px solid red;
+    border-left: 50px solid blue;
+    border-bottom: 50px solid grey;
+    border-right: 50px solid;
+}
+
+.border-radius-4 {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.border-radius-5 {
+    width: 0;
+    height: 0;
+    border: 25px solid red;
+    border-radius: 50%;
+}
+
+.circle {
+    width: 0;
+    height: 0;
+    border: 100px solid red;
+    border-radius: 50%;
+}
+
+.oval {
+    width: 100px;
+    height: 200px;
+    border: 50px solid red;
+    border-radius: 50%;
+}
+
+.lane {
+    width: 100px;
+    height: 200px;
+    border: 50px solid red;
+    border-radius: 101px;
+}
+
+.lemon {
+    width: 200px;
+    height: 200px;
+    background: #F5F240;
+
+    border: 1px solid #F0D900;
+    border-radius: 10px 150px 30px 150px;
+}
+
+.yin-yang {
+    width: 288px;
+    height: 144px;
+    background: #eee;
+    border: solid red;
+    border-width: 6px 6px 150px 6px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.yin-yang:before,
+.yin-yang:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background: #eee;
+    border: 54px solid red;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+}
+
+.yin-yang:after {
+    background: red;
+    border: 54px solid #eee;
+    left: 50%;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-bottom: 200px solid red;
+    border-right: 200px solid transparent;
+}
+
+.triangle2 {
+    width: 0;
+    height: 0;
+    border-bottom: 200px solid red;
+    border-right: 100px solid transparent;
+    border-left: 100px solid transparent;
+}
+
+
+.what1 {
+    width: 0px;
+    height: 0px;
+    border: 80px solid red;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+.what2 {
+    width: 126px;
+    height: 180px;
+    background-color: red;
+    border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+}

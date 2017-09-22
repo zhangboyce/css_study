@@ -1,5 +1,166 @@
 <div class="section chapter4" title="Chapter4">
-    <div class="slide" data-anchor="元素定位与布局">
-        <h1>元素定位与布局</h1>
+    <div class="slide" data-anchor="盒模型元素">
+        <h1>盒模型元素</h1>
+        <ul style="text-align: left; margin: 0 25%">
+            <li><h1>1. border</h1></li>
+            <li><h1>2. padding</h1></li>
+            <li><h1>3. margin</h1></li>
+        </ul>
     </div>
+    <div class="slide" data-anchor="border">
+        <h1>border</h1>
+        <pre><code class="css" data-code="chapter4-01"></code></pre>
+    </div>
+    <div class="slide" data-anchor="default-color">
+        <h1>一、默认情况下, 边框的颜色是元素本身的前景色</h1>
+        <pre><code class="css" data-code="chapter4-02"></code></pre>
+        <div>
+            <div class="inline-block border-default-color"></div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="default-background-1">
+        <h1>二、默认情况下, 背景会延伸到边框所在的区域下层</h1>
+        <pre><code class="css" data-code="chapter4-03"></code></pre>
+        <div>
+            <div class="inline-block border-default-background-1"></div>
+            <div class="inline-block border-default-background-2"></div>
+            <div class="inline-block border-default-background-3"></div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="questions">
+        <h1>一起思考</h1>
+        <ul style="text-align: left; margin: 0 30%;">
+            <li>一、没有大小的元素设置border会怎样?</li>
+            <li>二、border是什么形状?</li>
+            <li>三、border-radius的圆心在哪里?</li>
+        </ul>
+    </div>
+    <div class="slide" data-anchor="questions2">
+        <h1>... ...</h1>
+        <div style="background-color: whitesmoke; padding: 10px 0">
+            <div class="inline-block border-radius-1"></div>
+            <div class="inline-block border-radius-2"></div>
+            <div class="inline-block border-radius-3"></div>
+            <div class="inline-block border-radius-4"></div>
+            <div class="inline-block border-radius-5"></div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="circle">
+        <h1>Circle</h1>
+        <div class="flip-box">
+            <div class="flip-card in">
+                <pre><code class="css" data-code="chapter4-04"></code></pre>
+            </div>
+            <div class="flip-card">
+                <div style="background-color: whitesmoke;">
+                    <div class="inline-block circle" style="margin-top: 50px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="oval">
+        <h1>Oval</h1>
+        <div class="flip-box">
+            <div class="flip-card in">
+                <pre><code class="css" data-code="chapter4-05"></code></pre>
+            </div>
+            <div class="flip-card">
+                <div style="background-color: whitesmoke; padding: 10px">
+                    <div class="inline-block oval"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="?">
+        <h1>?</h1>
+        <div class="flip-box">
+            <div class="flip-card">
+                <div style="background-color: whitesmoke; padding: 10px">
+                    <div class="inline-block lane"></div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <pre><code class="css" data-code="chapter4-06"></code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="lemon">
+        <h1>Lemon</h1>
+        <div class="flip-box">
+            <div class="flip-card">
+                <pre><code class="css" data-code="chapter4-07"></code></pre>
+            </div>
+            <div class="flip-card">
+                <div style="background-color: whitesmoke; padding: 10px">
+                    <div class="inline-block lemon"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="yinyang">
+        <h1>Yin Yang</h1>
+        <div class="flip-box">
+            <div class="flip-card">
+                <pre><code class="css" data-code="chapter4-08"></code></pre>
+            </div>
+            <div class="flip-card">
+                <div style="background-color: whitesmoke; padding: 10px">
+                    <div class="inline-block yin-yang"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="triangle">
+        <h1>Triangle</h1>
+        <div class="flip-box">
+            <div class="flip-card in">
+                <pre><code class="css" data-code="chapter4-09"></code></pre>
+            </div>
+            <div class="flip-card">
+                <div style="background-color: whitesmoke;">
+                    <div class="inline-block triangle" style="margin-top: 50px"></div>
+                    <div class="inline-block triangle2" style="margin-top: 50px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="what1">
+        <h1>??</h1>
+        <div class="flip-box">
+            <div class="flip-card">
+                <div style="background-color: whitesmoke;">
+                    <div class="inline-block what1" style="margin-top: 50px"></div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <pre><code class="css" data-code="chapter4-10"></code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="what2">
+        <h1>???</h1>
+        <div class="flip-box">
+            <div class="flip-card">
+                <div style="background-color: whitesmoke;">
+                    <div class="inline-block what2" style="margin-top: 50px"></div>
+                    <div class="inline-block what2" style="margin-top: 50px"></div>
+                    <div class="inline-block what2" style="margin-top: 50px"></div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <pre><code class="css" data-code="chapter4-11"></code></pre>
+            </div>
+        </div>
+    </div>
+    <div class="slide" data-anchor="border-radius-demo">
+        <h1><a href="../pages/border-radius-demo.html" target="_blank">没有你做不到,只有你想不到</a></h1>
+        <p style="font-size: 24px">
+            Let <em>f = min(Li/Si)</em>, where
+            <br><em>i ∈ {top, right, bottom, left}</em>,
+            <br><em>Si is the sum</em> of the two corresponding radii of the corners on side i, and
+            <br><em>Ltop = Lbottom = the width</em> of the box, and
+            <br><em>Lleft = Lright = the height</em> of the box.
+            <br>If f < 1, then <em>all</em> corner radii are <em>reduced by multiplying them by f</em>.
+    </div>
+
 </div>

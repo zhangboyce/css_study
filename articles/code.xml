@@ -187,4 +187,148 @@
             :empty  选择的元素里面没有任何内容。
         */
     </code>
+
+    <code data-target="chapter4-01">
+        div {
+            border: 1px solid red;
+
+            border: 1px solid;
+
+            border-width: 10px;
+            border-width: 10px 2px;
+            border-width: 10px 2px 3px;
+
+            border-style: solid;
+            border-style: dashed solid;
+
+            border-color: red;
+            border-color: red blue;
+
+            border-bottom: 5px solid grey;
+            border-top: 6px solid red;
+
+            border: 1px solid red;
+            border-bottom-style: dashed;
+        }
+
+    </code>
+    <code data-target="chapter4-02">
+        div {
+            background: whitesmoke;
+            width: 200px;
+            height: 100px;
+            color: red;
+            border: 5px solid;
+        }
+    </code>
+    <code data-target="chapter4-03">
+        div {
+            background: whitesmoke;
+            width: 200px;
+            height: 100px;
+            border: 5px dashed blue;
+        }
+    </code>
+    <code data-target="chapter4-04">
+        div {
+            width: 0;
+            height: 0;
+            border: 100px solid red;
+            border-radius: 50%;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            border-radius: 50%;
+        }
+    </code>
+    <code data-target="chapter4-05">
+        .oval {
+            width: 100px;
+            height: 200px;
+            border: 50px solid red;
+            border-radius: 50%;
+        }
+    </code>
+    <code data-target="chapter4-06">
+        .lane {
+            width: 100px;
+            height: 200px;
+            border: 50px solid red;
+            border-radius: 101px;
+        }
+    </code>
+    <code data-target="chapter4-07">
+        .lemon {
+            width: 200px;
+            height: 200px;
+            background: #F5F240;
+
+            border: 1px solid #F0D900;
+            border-radius: 10px 150px 30px 150px;
+        }
+    </code>
+    <code data-target="chapter4-08">
+        .yin-yang {
+            width: 288px;
+            height: 144px;
+            background: #eee;
+            border: solid red;
+            border-width: 6px 6px 150px 6px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .yin-yang:before,
+        .yin-yang:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            background: #eee;
+            border: 54px solid red;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+        }
+        .yin-yang:after {
+            background: red;
+            border: 54px solid #eee;
+            left: 50%;
+        }
+    </code>
+    <code data-target="chapter4-09">
+        .triangle {
+            width: 0;
+            height: 0;
+            border-bottom: 200px solid red;
+            border-right: 200px solid transparent;
+        }
+        .triangle2 {
+            width: 0;
+            height: 0;
+            border-bottom: 200px solid red;
+            border-right: 100px solid transparent;
+            border-left: 100px solid transparent;
+        }
+    </code>
+    <code data-target="chapter4-10">
+        .what1 {
+            width: 0px;
+            height: 0px;
+            border: 80px solid red;
+            border-right-color: transparent;
+            border-radius: 50%;
+        }
+    </code>
+    <code data-target="chapter4-11">
+        .what2 {
+            width: 126px;
+            height: 180px;
+            background-color: red;
+            border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+        }
+    </code>
+
 </codes>

@@ -1,4 +1,6 @@
+@import "animate.css";
 @import "chapter1.css";
+@import "chapter4.css";
 
 html {
     font-family: serif, '宋体', monospace, "Courier New";
@@ -17,6 +19,8 @@ ul {
 
 a {
     text-decoration:none;
+    color: #00b0e8;
+    cursor: pointer;
 }
 
 p {
@@ -89,4 +93,26 @@ em {
 .items .item h5,
 .items .item h6 {
     padding: 6px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.vertical-middle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.flip-box {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+}
+
+.flip-box .flip-card {
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
 }

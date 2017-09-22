@@ -1,0 +1,37 @@
+.flip-card.in {
+    -webkit-animation-name: flipInTop;
+    -webkit-animation-duration: 500ms;
+    animation-name: flipInTop;
+    animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+}
+
+.flip-card.out {
+    -webkit-transform: rotateY(-90deg) scale(.8);
+    -webkit-animation-name: flipOutTop;
+    -webkit-animation-duration: 175ms;
+    transform: rotateY(-90deg) scale(.8);
+    animation-name: flipOutTop;
+    animation-duration: 175ms;
+    animation-timing-function: ease-in-out;
+}
+
+
+@keyframes flipInTop {
+    from { transform: rotateX(90deg) scale(.8); }
+    to { transform: rotateX(0deg) }
+}
+
+@-webkit-keyframes flipInTop {
+    from { -webkit-transform: rotateX(90deg) scale(.8); }
+    to { -webkit-transform: rotateX(0deg) }
+}
+
+@keyframes flipOutTop {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(90deg) scale(.8); }
+}
+@-webkit-keyframes flipOutTop {
+    from { -webkit-transform: rotateX(0deg) ; }
+    to { -webkit-transform: rotateX(90deg) scale(.8); }
+}
