@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>box-shadow-demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body, .container {
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            white-space: nowrap;
+            background: rgb(240, 243, 249);
+        }
+
+        .block {
+            background: white;
+            display: inline-block;
+            width: 48%;
+            height: 100%;
+            padding: 0;
+            margin: 0 1%;
+            vertical-align: middle;
+            white-space: normal;
+        }
+
+        .right > div {
+            width: 100%;
+        }
+        .right-content {
+            text-align: center;
+            height: 60%;
+        }
+
+        #content,
+        #style {
+            background: rgb(240, 243, 249);
+            height: 100%;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #content {
+            background: white;
+            /*line-height: 600px;*/
+        }
+
+        #content > div {
+            box-sizing: content-box;
+            background: white;
+            display: inline-block;
+            vertical-align: middle;
+            border: 0px solid transparent;
+        }
+
+        #style {
+            padding-left: 20px;
+        }
+
+        .left {
+            padding: 20px;
+        }
+
+        .row {
+            padding: 10px;
+        }
+
+        .row input {
+            height: 35px;
+        }
+
+        .row .label,
+        .row input,
+        .row .colors {
+            display: inline-block;
+            width: 30%;
+        }
+        .row .label {
+            text-align: left;
+        }
+
+        .color {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .color.active:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border: 0px solid rgba(255, 255, 255, .8);
+            border-width: 15px 12px;
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+        }
+
+        .color:hover {
+            opacity: .5;
+        }
+
+        .color[data-value="darkred"] {
+            background-color: darkred;
+        }
+        .color[data-value="dimgrey"] {
+            background-color: dimgrey;
+        }
+        .color[data-value="darkgreen"] {
+            background-color: darkgreen;
+        }
+        .color[data-value="skyblue"] {
+            background-color: skyblue;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="block left">
+        <div class="row">
+            <span class="label">width: </span>
+            <input type="text" class="val number" name="width" value="100" placeholder="px"/>
+        </div>
+        <div class="row">
+            <span class="label">height: </span>
+            <input type="text" class="val number" name="height" value="100" placeholder="px"/>
+        </div>
+        <div class="row">
+            <span class="label">border: </span>
+            <input type="text" class="val number" name="border-width" value="10" placeholder="px"/>
+            <span class="colors" name="border-color">
+                <span class="color" data-value="darkred"></span>
+                <span class="color" data-value="dimgrey"></span>
+                <span class="color" data-value="darkgreen"></span>
+                <span class="color" data-value="skyblue"></span>
+            </span>
+        </div>
+        <div class="row">
+            <span class="label">box-shadow-horizontal-offset: </span>
+            <input type="text" class="val number" name="box-shadow" value="0" placeholder="px"/>
+        </div>
+        <div class="row">
+            <span class="label">box-shadow-vertical-offset: </span>
+            <input type="text" class="val number" name="box-shadow" value="0" placeholder="px"/>
+        </div>
+        <div class="row">
+            <span class="label">box-shadow-blur-radius: </span>
+            <input type="text" class="val number" name="box-shadow" value="0" placeholder="px"/>
+        </div>
+        <div class="row">
+            <span class="label">box-shadow-spread-distance: </span>
+            <input type="text" class="val number" name="box-shadow" value="0" placeholder="px"/>
+        </div>
+    </div>
+    <div class="block right">
+        <div class="right-content">
+            <div id="content">
+                <div></div>
+            </div>
+        </div>
+        <div class="right-footer">
+            <div id="style">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var DOM_VK_UP = 38;
+        var DOM_VK_DOWN = 40;
+        var $content = $('#content > div');
+
+        $('input.val').bind('keyup paste', function(e) {
+            var $this = $(this);
+            fillBorderWidth($this);
+            drawByName($this.attr('name'));
+        });
+
+        $('input[name="width"]').trigger('keyup');
+        $('input[name="height"]').trigger('keyup');
+        $('input[name="border-width"]').trigger('keyup');
+        $('input[name="box-shadow"]').trigger('keyup');
+
+
+        $('input.val').bind('keydown', function(e) {
+            var $this = $(this);
+            if (e.keyCode == DOM_VK_UP) {
+                $this.val(($this.val() || 0)/1 + 1);
+            }
+            if (e.keyCode == DOM_VK_DOWN) {
+                $this.val(($this.val() || 0)/1 - 1);
+            }
+
+            fillBorderWidth($this);
+            drawByName($this.attr('name'));
+        });
+
+        var $colorsList = $('.colors');
+        [].forEach.call($colorsList, function(colors) {
+            var $colors = $(colors);
+            var name = $colors.attr('name');
+
+            $colors.children('.color').click(function(e) {
+                var $this = $(this);
+                var $currentColor = $this;
+                if (!$this.hasClass('active')) {
+                    $this.addClass('active');
+                    $this.siblings('.color').removeClass('active');
+                } else {
+                    $this.removeClass('active');
+                    $currentColor = null;
+                }
+
+                var color = $currentColor && $currentColor.attr('data-value') || 'transparent';
+
+                fillBorderColor(name, color);
+                draw(name, color);
+            });
+        });
+        $colorsList.children().first().trigger('click');
+
+        function fillBorderWidth($this) {
+            if ($this.attr('name') == 'border-width') {
+                var borderWidth = $this.val();
+                $('input[name="border-top-width"]').val(borderWidth);
+                $('input[name="border-right-width"]').val(borderWidth);
+                $('input[name="border-bottom-width"]').val(borderWidth);
+                $('input[name="border-left-width"]').val(borderWidth);
+            }
+
+            if ($this.attr('name') == 'border-radius') {
+                var borderRadius = $this.val();
+                $('input[name="border-top-left-radius"]').val(borderRadius);
+                $('input[name="border-top-right-radius"]').val(borderRadius);
+                $('input[name="border-bottom-right-radius"]').val(borderRadius);
+                $('input[name="border-bottom-left-radius"]').val(borderRadius);
+            }
+        }
+
+        function fillBorderColor(name, color) {
+            function __cal__(name) {
+                $('span[name="'+ name +'"]').children('span.color').removeClass('active');
+                $('span[name="'+ name +'"]').children('span[data-value='+ color +']').addClass('active');
+            }
+
+            if (name == 'border-color') {
+                __cal__('border-top-color');
+                __cal__('border-right-color');
+                __cal__('border-bottom-color');
+                __cal__('border-left-color');
+            }
+        }
+
+        function drawByName(name) {
+            var $inputs = $('input[name="'+ name +'"]');
+            __draw__(name, $inputs);
+        }
+
+        function __draw__(name, $inputs) {
+            if ($inputs.length < 1) return;
+            var val = [].map.call($inputs, function(input) {
+                var $input = $(input);
+                return ($input.val() || 0) + 'px';
+            }).join(' ');
+            draw(name, val);
+        }
+
+        function draw(name, value) {
+            $content[0].style[name] = value;
+            console.log(name, value);
+            $('#style').html($content.attr('style').replace(/;/g, ';<br>'));
+        }
+    });
+</script>

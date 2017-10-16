@@ -22,26 +22,27 @@
 <script type="text/javascript" src="vendor/highlight/highlight.pack.js"></script>
 <script type="text/javascript">
 
-    let chapters = [
+    var chapters = [
         'chapter0',
         'chapter1',
         'chapter2',
         'chapter3',
         'chapter4',
+        'chapter5',
         'chapter-last'
     ];
 
-    let promises = chapters.map(function(chapter) {
+    var promises = chapters.map(function(chapter) {
         return loadChapter(chapter)
     });
 
-    let $fullpage = $('#fullpage');
-    let $menus = $('#menus');
+    var $fullpage = $('#fullpage');
+    var $menus = $('#menus');
 
     Promise.all(promises).then(function (responses){
-        let $chapters = [];
+        var $chapters = [];
         chapters.forEach(function(chapter, index) {
-            let $chapter = $(responses[index]);
+            var $chapter = $(responses[index]);
             $fullpage.append($chapter);
 
             $chapters.push($chapter);
@@ -80,25 +81,25 @@
     }
 
     function setHeightForFlipCards($chapter) {
-        let $flipBoxs = $chapter.find('.flip-box');
+        var $flipBoxs = $chapter.find('.flip-box');
         if ($flipBoxs.length == 0) return;
 
         [].forEach.call($flipBoxs, function(flipBox) {
-            let $flipBox = $(flipBox);
-            let $flipCards = $flipBox.find('.flip-card');
+            var $flipBox = $(flipBox);
+            var $flipCards = $flipBox.find('.flip-card');
             if ($flipCards.length < 2) return;
 
-            let maxHeightFlip = [].reduce.call($flipCards, function(v1, v2) {
-                let h1 = $(v1).height();
-                let h2 = $(v2).height();
+            var maxHeightFlip = [].reduce.call($flipCards, function(v1, v2) {
+                var h1 = $(v1).height();
+                var h2 = $(v2).height();
                 return h1 > h2 ? v1: v2;
             });
 
-            let maxHeight = $(maxHeightFlip).height();
+            var maxHeight = $(maxHeightFlip).height();
             $flipBox.height(maxHeight);
 
             [].forEach.call($flipCards, function (card) {
-                let $card = $(card);
+                var $card = $(card);
                 $card.height(maxHeight);
                 $card.children().height(maxHeight);
             });
@@ -108,14 +109,14 @@
     }
 
     function bindClickEventForFlipBox($flipBox, $flipCards) {
-        let $current = null;
-        let $next = null;
-        let currentIndex = 0;
-        let cardCount = $flipCards.length;
+        var $current = null;
+        var $next = null;
+        var currentIndex = 0;
+        var cardCount = $flipCards.length;
 
         function flip() {
             [].forEach.call($flipCards, function(card, index) {
-                let $card = $(card);
+                var $card = $(card);
                 if($card.hasClass('in')) {
                     currentIndex = index;
                 }
@@ -140,10 +141,10 @@
         return new Promise(function(res, rej) {
             try {
                 $.get('articles/code.xml', function(response) {
-                    let codes = response.getElementsByTagName('code');
-                    let codeMap = {};
+                    var codes = response.getElementsByTagName('code');
+                    var codeMap = {};
                     [].forEach.call(codes, function(code) {
-                        let $code = $(code);
+                        var $code = $(code);
                         codeMap[$code.attr('data-target')] = $(code).html();
                     });
 
@@ -156,13 +157,13 @@
     }
 
     function initCode(codeMap) {
-        let $sections = $fullpage.children('.section');
+        var $sections = $fullpage.children('.section');
         [].forEach.call($sections, function (section) {
-            let $section = $(section);
-            let $codes = $section.find('code');
+            var $section = $(section);
+            var $codes = $section.find('code');
             [].forEach.call($codes, function(code) {
-                let $code = $(code);
-                let text = codeMap[$code.attr('data-code')];
+                var $code = $(code);
+                var text = codeMap[$code.attr('data-code')];
                 if (!text || !text.trim()) return;
                 if ($code.attr('class') == 'html') {
                     $code.text(text);
@@ -174,8 +175,8 @@
     }
 
     function initFullPage() {
-        let $sections = $fullpage.children('.section');
-        let anchors = [].map.call($sections, function(section) { return $(section).attr('title') });
+        var $sections = $fullpage.children('.section');
+        var anchors = [].map.call($sections, function(section) { return $(section).attr('title') });
         anchors.forEach(function(anchor) {
             $menus.append(`<li data-menuanchor=${ anchor }><a href="#${ anchor }"></a></li>`);
         });
