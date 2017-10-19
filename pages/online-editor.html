@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>box-shadow-demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body, .container {
+            font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+            background-color: rgb(29, 31, 32);
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .row {
+            width: 100%;
+            height: 50%;
+            border: 4px solid rgb(52, 53, 54);
+            white-space: nowrap;
+        }
+
+        .column {
+            display: inline-block;
+            width: 50%;
+            height: 100%;
+            border: 4px solid rgb(52, 53, 54);
+            background-color: rgb(29, 31, 32);
+        }
+
+        .column textarea {
+            height: 92%;
+            width: 100%;
+            background-color: inherit;
+            color: white;
+            border: none;
+            font-family: Monaco, MonoSpace;
+            font-size: 16px;
+            padding: 4px 10px;
+        }
+
+        .column span.title {
+            background-color: rgb(26, 28, 29);
+            color: white;
+            width: 100%;
+            height: 8%;
+            display: block;
+            padding: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgb(52, 53, 54);
+        }
+
+        .column textarea:focus {
+            outline: none;
+        }
+
+        .show-box {
+            background-color: white;
+            padding: 4px;
+            position: relative;
+            overflow: auto;
+        }
+
+        .mid {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
+    </style>
+    <style title="user-style"></style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <span class="title">HTML</span>
+            <textarea name="html"></textarea>
+        </div>
+        <div class="column">
+            <span class="title">CSS</span>
+            <textarea name="css"></textarea>
+        </div>
+    </div>
+    <div class="row show-box">
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var $htmlTextarea = $('textarea[name=html]');
+        var $cssTextarea = $('textarea[name=css]');
+
+        // 初始化textarea的值以及页面离开时将textarea的值存入到localStorage
+        var storage = window.localStorage || {};
+        $htmlTextarea.val(storage['html'] || '');
+        $cssTextarea.val(storage['css'] || '');
+
+        $(window).bind('beforeunload', function(){
+            var storage = window.localStorage || {};
+            storage['html'] = $htmlTextarea.val();
+            storage['css'] = $cssTextarea.val();
+        });
+
+        // cmd + k 永久清除当前textArea的值
+        $('textarea').bind('keydown', function(e) {
+            if (e.metaKey && e.keyCode == 75) {
+//                $(this).val('');
+//                storage.removeItem($(this).name);
+            }
+        });
+
+        // cmd + enter 执行html编辑器和css编辑器代码,将其插入到页面中
+        $('textarea').bind('keydown', function(e) {
+            if (e.metaKey && e.keyCode == 13) {
+                loadHtml();
+                loadCss();
+            }
+        });
+        loadHtml();
+        loadCss();
+
+        function loadHtml() {
+            var html = $htmlTextarea.val();
+            if (html && html.trim()) {
+                $('.show-box').html(html);
+            }
+        }
+        function loadCss() {
+            var css = $cssTextarea.val();
+            if (css && css.trim()) {
+                var $style = $('head').children('style[title="user-style"]');
+                $style.text(css);
+
+                console.log(loadCssRules('user-style'));
+            }
+        }
+
+        function loadCssRules(title) {
+            var rules = {};
+            var styleSheets = [].slice.call(document.styleSheets || []);
+            for (var i=0; i<styleSheets.length; i++) {
+                var styleSheet = styleSheets[i];
+                if (title && styleSheet.title != title) continue;
+
+                var styleRules = styleSheet.cssRules;
+                for(var j = 0; j < styleRules.length; j++) {
+                    var txt = styleRules[j].cssText.match(/{(.*)}$/i);
+                    rules[styleRules[j].selectorText] = txt[1].replace(/^\s+|\s+$/g, '');
+                }
+            }
+            return rules;
+        }
+
+        // 将textarea中使用的tab键替换成空格
+        $(document).delegate('textarea', 'keydown', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == 9) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+                $(this).val($(this).val().substring(0, start) + " " + $(this).val().substring(end));
+                this.selectionStart = this.selectionEnd = start + 1;
+            }
+        });
+
+        // cmd + c on window to show the code of the `html + css`
+        var isCode = false;
+        $(window).bind('keydown', function(e) {
+            if (e.metaKey && e.keyCode == 67) {
+                if (!isCode) {
+                    var html = $htmlTextarea.val();
+                    if (!html || !html.trim()) return;
+
+                    var $html = $(html);
+                    var cssRules = loadCssRules();
+                    let $this = $('<div></div>');
+                    $this.append($html);
+
+                    for (var key in cssRules) {
+                        var csses = cssRules[key].split(';').map(function(rule) {
+                            if (rule && rule.trim()) {
+                                var t = rule.split(':');
+                                return { [t[0].trim()]: t[1].trim() }
+                            }
+                        });
+                        csses.forEach(function(css) {
+                            if (css) {
+                                $this.find(key).css(css);
+                            }
+                        });
+                    }
+                    var $pre = $('<pre></pre>');
+                    $pre.text($this[0].innerHTML);
+                    $('.show-box').html($pre);
+                    isCode = true;
+                } else {
+                    loadHtml();
+                    isCode = false;
+                }
+            }
+        });
+    });
+</script>

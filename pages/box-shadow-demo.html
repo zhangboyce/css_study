@@ -49,15 +49,19 @@
 
         #content {
             background: white;
-            /*line-height: 600px;*/
+            position: relative;
         }
 
         #content > div {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
             box-sizing: content-box;
             background: white;
             display: inline-block;
             vertical-align: middle;
-            border: 0px solid transparent;
+            border: 0 solid transparent;
         }
 
         #style {
@@ -147,6 +151,10 @@
                 <span class="color" data-value="darkgreen"></span>
                 <span class="color" data-value="skyblue"></span>
             </span>
+        </div>
+        <div class="row">
+            <span class="label">border-radius: </span>
+            <input type="text" class="val number" name="border-radius" value="0" placeholder="px"/>
         </div>
         <div class="row">
             <span class="label">box-shadow-horizontal-offset: </span>

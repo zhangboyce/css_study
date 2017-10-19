@@ -117,3 +117,20 @@ em {
     width: 100%;
     box-sizing: border-box;
 }
+
+.middle-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+a.find-me {
+    color: rgb(0, 0, 0);
+}
+
+a.find-me:hover {
+    color: rgb(122, 3, 13);
+}
