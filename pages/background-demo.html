@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>background-demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body, .container {
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        em {
+            color: red;
+        }
+
+        strong {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        dl {
+            list-style: none;
+        }
+
+        .container {
+            white-space: nowrap;
+            background: rgb(240, 243, 249);
+        }
+
+        .block {
+            background: white;
+            display: inline-block;
+            height: 100%;
+            padding: 0;
+            vertical-align: middle;
+            white-space: normal;
+        }
+
+        .block.left {
+            width: 30%;
+            font-size: 16px;
+            overflow: scroll;
+            padding: 20px;
+            border: 20px solid transparent;
+        }
+
+        .block.right {
+            position: relative;
+            width: 70%;
+        }
+
+        .position {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            width: 500px;
+            height: 500px;
+
+            /* 清除display:inline-block元素换行符间隙*/
+            font-size: 0;
+            -webkit-text-size-adjust:none;
+
+            border: 1px solid rgb(122, 110, 90);
+            border-right: transparent;
+            box-sizing: border-box;
+
+            background: url('../images/bg/box_50x50.png') no-repeat;
+            background-size: 50px 50px;
+            transition: all 200ms linear;
+
+            padding: 50px;
+        }
+
+        .position > .coord {
+            position: absolute;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: url('../images/bg/gird_50x50.png');
+            background-size: 50px 50px;
+            box-sizing: border-box;
+        }
+
+        .coord-panel {
+            position: absolute;
+            display: inline-block;
+            color: #00AAAA;
+            padding: 4px;
+            font-size: 14px;
+            width: 70px;
+            height: 30px;
+        }
+
+        .coord-panel.horizontal {
+            border-top: 1px dashed red;
+            left: -70px;
+        }
+
+        .coord-panel.vertical {
+            border-left: 1px dashed red;
+            top: -30px;
+        }
+
+        .image-panel {
+            display: inline-block;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .image-panel.selected {
+            border: 1px solid darkred;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="block left">
+        <dl>
+            <dt>background-image:</dt>
+            <dd>
+                <div class="image-panel" style="background-image: url('../images/bg/box_50x50.png')"></div>
+                <div class="image-panel" style="background-image: url('../images/bg/circle.png')"></div>
+                <div class="image-panel" style="background-image: url('../images/bg/bg_100X50.jpg')"></div>
+                <div class="image-panel" style="background-image: url('../images/bg/bg_300X70.jpg')"></div>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>background-position: <em id="background-position"><strong>0px 0px</strong></em></dt>
+            <dd>
+                <input type="radio" name="background-position" value="top left" checked>
+                <span>top left</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-position" value="center center">
+                <span>center center</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-position" value="bottom right">
+                <span>bottom right</span>
+            </dd>
+        </dl>
+
+
+        <dl>
+            <dt>background-size: <em id="background-size"><strong>50px 50px</strong></em></dt>
+            <dd>
+                <input type="radio" name="background-size" value="30px 30px">
+                <span>30px 30px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="50px 50px" checked>
+                <span>50px 50px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="500px 500px">
+                <span>500px 500px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="600px 600px">
+                <span>600px 600px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="cover">
+                <span>cover</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="contain">
+                <span>contain</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="auto">
+                <span>auto</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="30%">
+                <span>30%</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="100%">
+                <span>100%</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="50% 50%">
+                <span>50% 50%</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="auto 50px">
+                <span>auto 50px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-size" value="50px auto">
+                <span>50px auto</span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>选择值：</dt>
+            <dd>X 轴：
+                <select id="position-x">
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option>
+                    <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="50%">50%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
+                    <option value="left">left</option>
+                    <option value="center">center</option>
+                    <option value="right">right</option>
+                </select>
+            </dd>
+            <dd>
+                Y 轴：
+                <select id="position-y">
+                    <option value="0%">0%</option>
+                    <option value="10%">10%</option>
+                    <option value="20%">20%</option>
+                    <option value="30%">30%</option>
+                    <option value="40%">40%</option>
+                    <option value="50%">50%</option>
+                    <option value="60%">60%</option>
+                    <option value="70%">70%</option>
+                    <option value="80%">80%</option>
+                    <option value="90%">90%</option>
+                    <option value="100%">100%</option>
+                    <option value="top">top</option>
+                    <option value="center">center</option>
+                    <option value="bottom">bottom</option>
+                </select>
+            </dd>
+        </dl>
+
+
+        <dl>
+            <dt>background-repeat: <em id="background-repeat"><strong>no-repeat</strong></em></dt>
+            <dd>
+                <input type="radio" name="background-repeat" value="no-repeat" checked>
+                <span>no-repeat</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-repeat" value="repeat-x">
+                <span>repeat-x</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-repeat" value="repeat-y">
+                <span>repeat-y</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-repeat" value="repeat">
+                <span>repeat</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-repeat" value="round">
+                <span>round</span>
+            </dd>
+            <dd>
+                <input type="radio" name="background-repeat" value="space">
+                <span>space</span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>background-clip: <em id="left-background-clip"><strong>border-box</strong></em></dt>
+            <dd>
+                <input type="radio" name="left-background-clip" value="border-box" checked>
+                <span>border-box</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-clip" value="padding-box">
+                <span>padding-box</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-clip" value="content-box">
+                <span>content-box</span>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>background-origin: <em id="left-background-origin"><strong>padding-box</strong></em></dt>
+            <dd>
+                <input type="radio" name="left-background-origin" value="border-box">
+                <span>border-box</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-origin" value="padding-box" checked>
+                <span>padding-box</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-origin" value="content-box">
+                <span>content-box</span>
+            </dd>
+        </dl>
+
+
+        <dl>
+            <dt>background-attachment: <em id="left-background-attachment"><strong>scroll</strong></em></dt>
+            <dd>
+                <input type="radio" name="left-background-attachment" value="scroll" checked>
+                <span>scroll</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-attachment" value="fixed">
+                <span>fixed</span>
+            </dd>
+            <dd>
+                <input type="radio" name="left-background-attachment" value="local">
+                <span>local</span>
+            </dd>
+        </dl>
+
+    </div>
+    <div class="block right">
+        <div class="position">
+            <span class="coord-panel horizontal" style="top: 0;">(0, 0)</span>
+            <span class="coord-panel horizontal" style="top: 50px">(0, 50)</span>
+            <span class="coord-panel horizontal" style="top: 250px">(0, 250)</span>
+            <span class="coord-panel horizontal" style="top: 450px">(0, 450)</span>
+            <span class="coord-panel vertical" style="left: 0;">(0, 0)</span>
+            <span class="coord-panel vertical" style="left: 50px">(50, 0)</span>
+            <span class="coord-panel vertical" style="left: 250px">(250, 0)</span>
+            <span class="coord-panel vertical" style="left: 450px">(450, 0)</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+
+        var $positionVal = $('#background-position').children('strong');
+        var $position = $('.position');
+
+        // 初始化表格
+        initGrid();
+        function initGrid() {
+            for (var i =0; i< 100; i++) {
+                var row = Math.floor(i/10);
+                var col = i%10;
+                var width = 50;
+                var top = row*width + 'px';
+                var left = col*width + 'px';
+
+                var $coord = $(`<div class="coord" data-row="${ row }" data-col="${ col }" style="top: ${ top }; left: ${ left };"></div>`);
+                $position.append($coord);
+            }
+
+            $position.children('.coord').click(function() {
+                var $this = $(this);
+                var top = $this.css('top');
+                var left = $this.css('left');
+
+                $position.css('background-position', left + ' ' + top);
+
+                $positionVal.text(left + ' ' + top);
+            });
+        }
+
+        $('input[name^=background-]').click(function() {
+            var $this = $(this);
+            var name = $this.attr('name');
+            var val = $this.val();
+
+            $position.css(name, val);
+            $('#' + name).children('strong').text(val);
+        });
+
+        $('input[name^=left-background-]').click(function() {
+            var $this = $(this);
+            var name = $this.attr('name');
+            var val = $this.val();
+
+            $('.left').css(name.replace('left-', ''), val);
+            $('#' + name).children('strong').text(val);
+        });
+        $('.left').dblclick(function() {
+            if ($(this).css('background-image') == 'none') {
+                $(this).css('background-image', 'url(../images/bg/bg.jpg)')
+                        .css('background-size', 'cover')
+                        .css('background-repeat', 'no-repeat')
+                        .css('color', 'white');
+            } else {
+                $(this).css('background-image', 'none')
+                        .css('color', 'black');
+            }
+        });
+
+        var $temp_x = '0%', $temp_y = '0%';
+        $("#position-x").change(function() {
+            $temp_x = $(this).val();
+            var $bg_val = $(this).val() + " " + $temp_y;
+            $position.css("background-position", $bg_val);
+            $positionVal.text($bg_val);
+        });
+
+        $("#position-y").change(function() {
+            $temp_y = $(this).val();
+            var $bg_val = $temp_x + " " + $(this).val();
+            $position.css("background-position", $bg_val);
+            $positionVal.html($bg_val);
+        });
+
+        $('.image-panel').click(function() {
+            $(this).addClass('selected');
+            $(this).siblings().removeClass('selected');
+            $position.css("background-image", $(this).css('background-image'));
+        });
+    });
+</script>
