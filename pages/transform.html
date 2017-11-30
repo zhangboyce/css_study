@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>background-demo</title>
+    <link rel="stylesheet" type="text/css" href="../css/patterns.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body, .container {
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        em {
+            color: red;
+        }
+
+        strong {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        dl {
+            list-style: none;
+        }
+
+        .container {
+            white-space: nowrap;
+            background: rgb(240, 243, 249);
+        }
+
+        .block {
+            background: white;
+            display: inline-block;
+            height: 100%;
+            padding: 0;
+            vertical-align: middle;
+            white-space: normal;
+        }
+
+        .block.left {
+            width: 30%;
+            font-size: 16px;
+            overflow: scroll;
+            padding: 20px;
+            border: 20px solid transparent;
+        }
+
+        .block.right {
+            position: relative;
+            width: 70%;
+        }
+
+        .coordinate {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+
+            width: 500px;
+            height: 500px;
+            background-color: #ccc;
+            background-image: linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px), linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+        }
+
+        .coordinate .position {
+            width: 100%;
+            height: 100%;
+        }
+
+        .coordinate .position .coord-panel {
+            display: inline-block;
+            position: absolute;
+            font-size: 12px;
+            color: rgb(105, 105, 105);
+        }
+
+        .coordinate .position .coord-panel.horizontal {
+            top: -36px;
+            height: 36px;
+            border-left: 1px dashed red;
+        }
+
+        .coordinate .position .coord-panel.vertical {
+            width: 36px;
+            left: -36px;
+            border-top: 1px dashed red;
+        }
+
+        .target-container {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        #transform-target {
+            width: 100%;
+            height: 100%;
+            background-color: slategray;
+        }
+
+        .center {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 100%;
+            background: red;
+            top: 50%;
+            left: 50%;
+            transform: translate(-3px, -3px);
+            z-index: 1;
+        }
+        .center:before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            right: 2px;
+            top: -6px;
+            bottom: -6px;
+            background: red;
+        }
+
+        .center:after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            right: -6px;
+            top: 2px;
+            bottom: 2px;
+            background: red;
+        }
+
+        i.desc {
+            position: relative;
+            display: inline-block;
+            background-color: rgb(214, 222, 224);
+            width: 14px;
+            height: 2px;
+            cursor: pointer;
+        }
+        i.desc:hover {
+            background-color: rgb(164, 172, 174);
+        }
+
+        i.desc:before {
+            position: absolute;
+            background-color: inherit;
+            content: '';
+            width: 14px;
+            height: 2px;
+            top: 4px;
+        }
+        i.desc:after {
+            position: absolute;
+            background-color: inherit;
+            content: '';
+            width: 14px;
+            height: 2px;
+            top: -4px;
+        }
+
+        .transform-values dd {
+            height: 40px;
+        }
+
+        .transform-values dd > span {
+            display: inline-block;
+            vertical-align: middle;
+            width: 90%;
+            padding: 2px 6px;
+            margin-top: 10px;
+            border: 2px solid rgb(214, 222, 224);
+            border-left-width: 4px;
+            cursor: pointer;
+        }
+
+        .transform-values dd > span:hover {
+            border-color: rgb(194, 202, 204);
+        }
+
+        .transform-values dd > span.checked {
+            border-color: red;
+        }
+
+        .coordinate .position .coord-panel.wide {
+            visibility: hidden;
+        }
+
+        @media screen and (min-width: 1400px) {
+            .coordinate {
+                width: 700px;
+            }
+
+            .coordinate .position .coord-panel.horizontal.wide {
+                visibility: visible;
+            }
+
+            .coordinate .position .coord-panel.horizontal.narrow {
+                visibility: hidden;
+            }
+        }
+
+        @media screen and (min-height: 900px) {
+            .coordinate {
+                height: 700px;
+            }
+
+            .coordinate .position .coord-panel.vertical.wide {
+                visibility: visible;
+            }
+
+            .coordinate .position .coord-panel.vertical.narrow {
+                visibility: hidden;
+            }
+        }
+
+        .transform-origin-x dd,
+        .transform-origin-y dd,
+        .transform-origin-z dd {
+            float: left;
+        }
+
+        .transform-origin-x,
+        .transform-origin-y,
+        .transform-origin-z {
+            padding: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="block left">
+        <dl class="transform-values">
+            <dt>select transform functions: </dt>
+            <dd>
+                <span>matrix(1, 2, 3, 4, 5, 6)</span>
+                <i class="desc"></i>
+            </dd>
+            <dd>
+                <span>translate(120px, 50%)</span>
+                <i class="desc"></i>
+            </dd>
+            <dd>
+                <span>scale(2, 0.5)</span>
+                <i class="desc"></i>
+            </dd>
+            <dd>
+                <span>rotate(45deg)</span>
+                <i class="desc"></i>
+            </dd>
+            <dd>
+                <span>skew(30deg, 20deg)</span>
+                <i class="desc"></i>
+            </dd>
+        </dl>
+        <dl class="transform-origin-x">
+            <dt>transform-origin-x: <em><strong></strong></em></dt>
+            <dd>
+                <input type="radio" name="transform-origin-x" value="left">
+                <span>left</span>
+            </dd>
+            <dd >
+                <input type="radio" name="transform-origin-x" value="center">
+                <span>center</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-x" value="right">
+                <span>right</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-x" value="60%">
+                <span>60%</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-x" value="80px">
+                <span>80px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-x" value="180px">
+                <span>180px</span>
+            </dd>
+        </dl>
+        <dl class="transform-origin-y">
+            <dt>transform-origin-y: <em><strong></strong></em></dt>
+            <dd>
+                <input title="" type="radio" name="transform-origin-y" value="top" />
+                <span>top</span>
+            </dd>
+            <dd >
+                <input type="radio" name="transform-origin-y" value="center">
+                <span>center</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-y" value="bottom">
+                <span>bottom</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-y" value="30%">
+                <span>30%</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-y" value="20px">
+                <span>20px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-y" value="120px">
+                <span>120px</span>
+            </dd>
+        </dl>
+        <dl class="transform-origin-z">
+            <dt>transform-origin-z: <em><strong></strong></em></dt>
+            <dd>
+                <input type="radio" name="transform-origin-z" value="80px">
+                <span>80px</span>
+            </dd>
+            <dd>
+                <input type="radio" name="transform-origin-z" value="120px">
+                <span>120px</span>
+            </dd>
+        </dl>
+
+        <div style="margin-top: 100px">
+            <i>transform:</i>
+            <strong><em><p id="transform-style"></p></em></strong>
+        </div>
+    </div>
+    <div class="block right">
+        <div class="coordinate">
+            <div class="position">
+                <span class="coord-panel horizontal" style="left: 0;">0</span>
+                <span class="coord-panel horizontal" style="left: 40px;">40px</span>
+                <span class="coord-panel horizontal" style="left: 100px">100px</span>
+                <span class="coord-panel horizontal" style="left: 200px">200px</span>
+                <span class="coord-panel horizontal wide" style="left: 400px">400px</span>
+                <span class="coord-panel horizontal narrow" style="left: 500px">500px</span>
+                <span class="coord-panel horizontal wide" style="left: 700px">700px</span>
+                <span class="coord-panel vertical" style="top: 0;">0</span>
+                <span class="coord-panel vertical" style="top: 40px;">40px</span>
+                <span class="coord-panel vertical" style="top: 100px">100px</span>
+                <span class="coord-panel vertical" style="top: 200px">200px</span>
+                <span class="coord-panel vertical wide" style="top: 400px">400px</span>
+                <span class="coord-panel vertical narrow" style="top: 500px">500px</span>
+                <span class="coord-panel vertical wide" style="top: 700px">700px</span>
+            </div>
+            <div class="target-container">
+                <div id="transform-target"></div>
+                <i class="center"></i>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var $transformTarget = $('#transform-target');
+        var $transformStyle = $('#transform-style');
+        var $center = $('.center');
+
+        $('.transform-values dd > span').click(function() {
+            var $this = $(this);
+            !$this.hasClass('checked') ? $this.addClass('checked') : $this.removeClass('checked');
+
+            let transforms = [].map.call($('.transform-values dd > span.checked'), function(it) {
+                return $(it).text() || '';
+            });
+
+            $transformTarget.css('transform', transforms.join(' '));
+            $transformStyle.html(transforms.join('<br>'));
+        });
+
+
+        var origin = { x: '50%', y: '50%', z: 0};
+        __flush__(origin);
+
+
+        $('input[name^=transform-origin-]').click(function() {
+            var $this = $(this);
+            var name = $this.attr('name');
+
+            var originName = name.replace('transform-origin-', '');
+            var val = $this.val();
+            origin = Object.assign(origin, { [originName]: val });
+
+            __flush__(origin);
+        });
+
+        function __flush__(origin) {
+            Object.keys(origin).forEach(function(it) {
+                var val = origin[it];
+                $('.transform-origin-' + it).children('dt').find('strong').text(val);
+
+                it == 'x' ? $center.css('left', val == 'left' ? '0%' : val == 'center' ? '50%': val == 'right' ? '100%' : val) : null;
+                it == 'y'? $center.css('top', val == 'top' ? '0%' : val == 'center' ? '50%': val == 'bottom' ? '100%' : val) : null;
+            });
+            $transformTarget.css('transform-origin', Object.values(origin).join(' '));
+        }
+    });
+</script>

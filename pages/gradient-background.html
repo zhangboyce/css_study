@@ -3,9 +3,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>gradient-background</title>
-    <link rel="stylesheet/less" type="text/css" href="../less/common.less">
-    <link rel="stylesheet/less" type="text/css" href="../less/patterns.less">
+    <link rel="">
+    <link rel="stylesheet" type="text/css" href="../css/patterns.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            min-height: 100%;
+        }
+
         body {
             padding: 0 20px;
             background: #e8eff5 url('../images/bg/gradient-background.png');
@@ -119,10 +130,14 @@
             display: none;
         }
 
+        body[class] > h1 {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
-<h1>CSS3渐变背景</h1>
+<h1 class="title">CSS3渐变背景</h1>
 <div class="container">
     <ul class="patterns">
         <li class="starry"></li>
@@ -137,13 +152,17 @@
         <li class="checkerboard-1"></li>
         <li class="checkerboard-2"></li>
         <li class="checkerboard-3"></li>
+        <li class="brick"></li>
+        <li class="cloth"></li>
+        <li class="warn-line"></li>
+        <li class="brick-wall"></li>
     </ul>
 </div>
 </body>
 </html>
 
 <script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
-<script type="text/javascript" src="../vendor/less/less.min.js"></script>
+<!--<script type="text/javascript" src="../vendor/less/less.min.js"></script>-->
 <script type="text/javascript">
     $(function() {
         var rules = (function loadCssRules() {
