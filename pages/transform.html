@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>background-demo</title>
     <link rel="stylesheet" type="text/css" href="../css/patterns.css">
+    <link rel="stylesheet/less" type="text/css" href="../css/transform.less">
     <style>
         * {
             box-sizing: border-box;
@@ -46,7 +47,7 @@
         .block.left {
             width: 30%;
             font-size: 16px;
-            overflow: scroll;
+            /*overflow: scroll;*/
             padding: 20px;
             border: 20px solid transparent;
         }
@@ -142,45 +143,15 @@
             background: red;
         }
 
-        i.desc {
-            position: relative;
-            display: inline-block;
-            background-color: rgb(214, 222, 224);
-            width: 14px;
-            height: 2px;
-            cursor: pointer;
-        }
-        i.desc:hover {
-            background-color: rgb(164, 172, 174);
-        }
-
-        i.desc:before {
-            position: absolute;
-            background-color: inherit;
-            content: '';
-            width: 14px;
-            height: 2px;
-            top: 4px;
-        }
-        i.desc:after {
-            position: absolute;
-            background-color: inherit;
-            content: '';
-            width: 14px;
-            height: 2px;
-            top: -4px;
-        }
-
         .transform-values dd {
+            position: relative;
             height: 40px;
         }
 
         .transform-values dd > span {
             display: inline-block;
-            vertical-align: middle;
             width: 90%;
             padding: 2px 6px;
-            margin-top: 10px;
             border: 2px solid rgb(214, 222, 224);
             border-left-width: 4px;
             cursor: pointer;
@@ -192,6 +163,25 @@
 
         .transform-values dd > span.checked {
             border-color: red;
+        }
+
+        .transform-values dd > div.detail {
+            visibility: hidden;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            background-color: white;
+            z-index: 1;
+            border-radius: 4px;
+            box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, .3);
+            transition: witdh 0.3s ease-in;
+        }
+        .transform-values i.active ~ div.detail {
+            visibility: visible;
+            right: -600px;
+            width: 600px;
+            padding: 10px;
         }
 
         .coordinate .position .coord-panel.wide {
@@ -245,25 +235,87 @@
     <div class="block left">
         <dl class="transform-values">
             <dt>select transform functions: </dt>
-            <dd>
-                <span>matrix(1, 2, 3, 4, 5, 6)</span>
-                <i class="desc"></i>
-            </dd>
+            <!--<dd>-->
+                <!--<span>matrix(1, 2, 3, 4, 5, 6)</span>-->
+                <!--<i class="detail-icon"></i>-->
+                <!--<div class="detail">-->
+                <!--</div>-->
+            <!--</dd>-->
             <dd>
                 <span>translate(120px, 50%)</span>
-                <i class="desc"></i>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>translate(e[, f]) 平移变换<strong>(仿射变换)</strong>，以向量(e, f) 的方向和长度平移图像，f 可选，默认为0；</p>
+                    <p>translateX(e) 图像向X 轴方向平移e 的距离，派生自translate；</p>
+                    <p>translateY(f) 图像向Y 轴方向平移f 的距离，派生自translate；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>translateY(120px)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>translateX(e) 图像向X 轴方向平移e 的距离，派生自translate；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>translateX(120px)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>translateY(f) 图像向Y 轴方向平移f 的距离，派生自translate；</p>
+                </div>
             </dd>
             <dd>
                 <span>scale(2, 0.5)</span>
-                <i class="desc"></i>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>scale(a[, d]) 缩放变换<strong>(线性变换)</strong>，图像所有的点的x 轴的值缩放a 倍，y 轴的值缩放d 倍，d 可选，默认与a 相同；</p>
+                    <p>scaleX(a) 图像所有的点的x 轴的值缩放a 倍，派生自scale；</p>
+                    <p>scaleY(d) 图像所有的点的y 轴的值缩放d 倍，派生自scale；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>scaleX(3)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>scaleX(a) 图像所有的点的x 轴的值缩放a 倍，派生自scale；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>scaleY(1.2)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>scaleY(d) 图像所有的点的y 轴的值缩放d 倍，派生自scale；</p>
+                </div>
             </dd>
             <dd>
                 <span>rotate(45deg)</span>
-                <i class="desc"></i>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>rotate(a) 旋转变换<strong>(线性变换)</strong>，图像沿着transform-origin指定点（默认是中心点）旋转𝚊 度，单位为deg；</p>
+                </div>
             </dd>
             <dd>
                 <span>skew(30deg, 20deg)</span>
-                <i class="desc"></i>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>skew(a[,b]) 错切变换<strong>(线性变换)</strong>，图像所在坐标系的X 轴倾斜a 度，Y 轴倾斜b 度，b 为可选值，默认为0，a、b 单位均为deg；</p>
+                    <p>skewX(a) 图像所在坐标系的X 轴倾斜a 度，派生自skewX；</p>
+                    <p>skewY(b) 图像所在坐标系的Y 轴倾斜b 度，派生自skewY；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>skewX(30deg)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>skewX(a) 图像所在坐标系的X 轴倾斜a 度，派生自skewX；</p>
+                </div>
+            </dd>
+            <dd>
+                <span>skewY(60deg)</span>
+                <i class="detail-icon"></i>
+                <div class="detail">
+                    <p>skewY(b) 图像所在坐标系的Y 轴倾斜b 度，派生自skewY；</p>
+                </div>
             </dd>
         </dl>
         <dl class="transform-origin-x">
@@ -366,6 +418,7 @@
 </html>
 
 <script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript" src="../vendor/less/less.min.js"></script>
 <script type="text/javascript">
     $(function() {
         var $transformTarget = $('#transform-target');
@@ -410,5 +463,18 @@
             });
             $transformTarget.css('transform-origin', Object.values(origin).join(' '));
         }
+
+
+        $('.detail-icon').click(function() {
+            $(this).toggleClass('active');
+        });
+
+        $('body').click(function(e) {
+            $('.transform-values .detail').each(function(index) {
+                if (e.target != this && !$(e.target).hasClass('detail-icon')) {
+                    $(this).siblings('i.active').removeClass('active');
+                }
+            });
+        });
     });
 </script>

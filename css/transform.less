@@ -1,0 +1,55 @@
+@detail-icon-height: 20px;
+@detail-icon-width: 20px;
+@detail-icon-line-height: @detail-icon-height / 5;
+@detail-icon-color: rgb(214, 222, 224);
+@detail-icon-hover-color: rgb(164, 172, 174);
+
+@before-line-top: 0;
+@after-line-top: 4 * (@detail-icon-height / 5);
+
+.detail-icon {
+  position: relative;
+  display: inline-block;
+  background: @detail-icon-color linear-gradient(white 0, white 40%, transparent 40%, transparent 60%, white 60%, white 100%);
+  width: @detail-icon-width;
+  height: @detail-icon-height;
+  cursor: pointer;
+  transition: background 0.3s ease-in;
+
+  &:hover {
+    background-color: @detail-icon-hover-color;
+  }
+  &.active {
+    background: @detail-icon-hover-color linear-gradient(white 0, white 100%);
+  }
+}
+
+.detail-icon:before {
+  .pseudo(@before-line-top);
+}
+
+.detail-icon:after {
+  .pseudo(@after-line-top)
+}
+
+.pseudo(@top) {
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  width: @detail-icon-width;
+  height: @detail-icon-line-height;
+  top: @top;
+  transition: all 0.3s ease-in;
+  transform-origin: 50% 50%;
+}
+
+.detail-icon.active:before {
+  //transform: translateY(((2 - sqrt(2))*@detail-icon-width - 2*@detail-icon-line-height)/4) rotate(45deg)
+  transform: translateY(2*@detail-icon-line-height) rotate(45deg)
+}
+
+.detail-icon.active:after {
+  //transform: translateY(-((2 - sqrt(2))*@detail-icon-width - 2*@detail-icon-line-height)/4) rotate(-45deg)
+  transform: translateY(-2*@detail-icon-line-height) rotate(-45deg)
+}
+

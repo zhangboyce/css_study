@@ -134,3 +134,10 @@ a.find-me {
 a.find-me:hover {
     color: rgb(122, 3, 13);
 }
+
+.math-jax {
+    font-size: 24px;
+    color: black;
+    background-color: white;
+    padding: 20px;
+}
