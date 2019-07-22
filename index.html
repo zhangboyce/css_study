@@ -36,6 +36,8 @@
         'chapter5',
         'chapter6',
         'chapter7',
+        'chapter8',
+        'chapter9',
         'chapter-last'
     ];
 
@@ -61,7 +63,7 @@
 
             initCode(codeMap);
             initHighlighting();
-            bindFlipEvent($chapters)
+            bindFlipEvent($chapters);
             initFullPage();
         });
 
@@ -89,7 +91,7 @@
 
     function setHeightForFlipCards($chapter) {
         var $flipBoxs = $chapter.find('.flip-box');
-        if ($flipBoxs.length == 0) return;
+        if ($flipBoxs.length === 0) return;
 
         [].forEach.call($flipBoxs, function(flipBox) {
             var $flipBox = $(flipBox);

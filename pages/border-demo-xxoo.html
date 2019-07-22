@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>border-radius-demo-xxoo</title>
+    <style>
+        .pizza {
+            position: relative;
+            margin: 40px;
+            display: inline-block;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background:
+                    radial-gradient(circle, #b22222 63%, transparent 65%),
+                    radial-gradient(circle, transparent 0%, #8b4513 84%);
+            box-shadow:
+                    2px 2px 5px rgba(0,0,0,.2);
+
+        }
+
+        .pizza::before {
+            position: absolute;
+            content: '';
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            left: 45px;
+            top: 53px;
+
+            box-shadow:
+                    40px 10px 0 white,
+                    90px 60px 0 white,
+                    70px 90px 0 white,
+
+                    50px 60px 0 -12px black;
+        }
+
+        .pizza::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 65px;
+            top: 45px;
+            background: #2e8b57;
+            border-radius: 35px 5px;
+
+            box-shadow:
+                    50px 40px 0 #2e8b57,
+                    30px 60px 0 -2px #2e8b57;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <!--<div class="border">-->
+    <!--</div>-->
+
+    <div class="linear-gradient">
+
+    </div>
+
+    <!--<div class="shadow"></div>-->
+
+    <div style="background: rgb(255, 232, 198); text-align: center">
+        <div class="pizza"></div>
+    </div>
+    <!--<div style="background: rgb(0, 128, 128); height: 300px">-->
+        <!--<div class="breakfast"></div>-->
+    <!--</div>-->
+</div>
+</body>
+</html>

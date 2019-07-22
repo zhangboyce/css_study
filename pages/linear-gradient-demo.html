@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>linear-gradient-demo</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,800|Ubuntu+Mono" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body, .container {
+            height: 100%;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #000022;
+            color: white;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            position: relative;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .container h1 {
+            margin: 10px 0;
+            text-transform: uppercase;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .linear-gradient {
+            position: relative;
+            display: inline-block;
+            border-radius: 50%;
+            border: 1px solid #acacac;
+        }
+
+        .linear-gradient .point {
+            display: inline-block;
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .linear-gradient .line {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: calc(50% - 0.5px);
+            width: 0;
+            height: 400px;
+            border: 1px dashed #acacac;
+            cursor: pointer;
+        }
+
+        .colors {
+            display: none;
+            flex-wrap: wrap;
+            align-items: stretch;
+            align-content: baseline;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: calc(100% + 10px);
+            width: 600px;
+            height: 600px;
+            background: whitesmoke;
+            border-radius: 4px;
+            overflow: scroll;
+        }
+
+        .colors .color {
+            padding: 4px;
+            width: 180px;
+            height: 180px;
+            margin: 4px;
+            box-shadow: 0 10px 40px -10px rgba(0,64,128,.2);
+            transition: box-shadow .3s;
+            cursor: pointer;
+        }
+
+        .colors.show {
+            display: flex;
+        }
+
+        .output {
+            z-index: 3;
+            width: auto;
+            padding: 10px;
+            font-size: 200%;
+            color: #e50;
+            color: hsla(20,100%,50%,.94);
+            background: currentColor;
+            box-shadow: 2px 2px 10px rgba(200,0,0,.5);
+        }
+
+
+        .output p {
+            width: 100%;
+            max-height: 200px;
+            overflow: scroll;
+            color: white;
+            padding: 10px;
+            border: 0;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            resize: vertical;
+            box-sizing: border-box;
+            border-radius: 1px;
+            font-size: 75%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>linear-gradient</h1>
+    <div class="linear-gradient">
+        <div class="line" id="line"></div>
+        <div class="points"></div>
+        <div class="colors"></div>
+    </div>
+    <div class="output">
+        <p></p>
+    </div>
+</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../vendor/juery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var selectColorCallback = null;
+        function colors(line) {
+            var colors = [
+                ['transparent', 'transparent', 'transparent', 'transparent'],
+                ['#f9f6f2', '#f1d6ab', '#a0855b', '#38470b'],
+                ['#eaeaea', '#a1dd70', '#00bdaa', '#8559a5'],
+                ['#44000d', '#83142c', '#ad1d45', '#f9d276'],
+                ['#08ffc8', '#fff7f7', '#dadada', '#204969'],
+                ['#ffb6b9', '#fae3d9', '#bbded6', '#8ac6d1'],
+                ['#252525', '#ff0000', '#af0404', '#414141'],
+                ['#2d3561', '#c05c7e', '#f3826f', '#ffb961'],
+                ['#ffb961', '#f9bcdd', '#d5a4cf', '#b689b0'],
+                ['#293462', '#216583', '#f76262', '#fff1c1'],
+                ['#d3f6f3', '#f9fce1', '#fee9b2', '#fbd1b7'],
+                ['#fdef96', '#f7b71d', '#e2c275', '#afa939'],
+                ['#f4f4f4', '#eadca6', '#e2c275', '#c36a2d']
+            ];
+            colors.forEach(function (color) {
+                var $color = $("<div class='color'></div>");
+                color.forEach(function (c, i) {
+                    var $item = $("<div class='color-item'></div>");
+                    $item.css('background', c);
+                    $item.css('height', '25%');
+
+                    $item.click(function () {
+                        if (selectColorCallback) {
+                            selectColorCallback(c);
+                            selectColorCallback = null;
+                        }
+                        $('.colors').toggleClass('show');
+
+                    });
+                    $color.append($item);
+                });
+
+                $('.colors').append($color);
+            });
+        }
+
+        function Circle() {
+            var width = 400;
+            var height = 400;
+            var linearGradient = document.getElementsByClassName('linear-gradient')[0];
+            linearGradient.style.width = width + 'px';
+            linearGradient.style.height = height + 'px';
+
+            var offsetX = linearGradient.offsetLeft;
+            var offsetY = linearGradient.offsetTop;
+
+            var centerX = offsetX + width / 2;
+            var centerY = offsetY + height / 2;
+            var radius = width / 2;
+            return { R: radius,  center: { X: centerX, Y: centerY }};
+        }
+
+        /**
+         *
+         * @param r 点所在的圆周半径，r=circle.R, 点位于最外的圆周上；r<circle.R, 点位于内某圆周上。
+         * @param _x_ 以圆心为原点(x=x, y=-y)的坐标系中点的x坐标。
+         * @param _y_ 以圆心为原点(x=x, y=-y)的坐标系中点的y坐标。
+         * @param bg 点的背景颜色
+         * @constructor
+         */
+        function Point(r, bg) {
+            var width = 10;
+            var height = 10;
+
+            var top = function (deg) {
+                var _deg_ = Math.abs(deg) * Math.PI / 180;
+                var _top_ = circle.R + (-Math.cos(_deg_)*r) - width/2;
+                console.log('_top_: ', _top_);
+                return _top_;
+            };
+            var left = function (deg) {
+                var _deg_ = Math.abs(deg) * Math.PI / 180;
+                var _left_ = circle.R + Math.sin(_deg_)*r - width/2;
+                console.log('_left_: ', _left_);
+                return _left_;
+            };
+
+            return {
+                r: r,
+                top: top,
+                left: left,
+                width: width,
+                height: height,
+                bg: bg
+            };
+        }
+
+        function Line(circle) {
+            var $line = $('#line');
+            var points = [];
+            var deg = 0;
+
+            var getBgs = function () {
+                var bgs = [];
+                points.forEach(function (point) {
+                    var r = point.r;
+                    var bg = point.bg;
+                    bgs.push({ percent: (circle.R - r) / (2*circle.R), color: bg })
+                });
+                return bgs;
+            };
+
+            var drawBg = function () {
+                var bgs = getBgs();
+                bgs.sort(function (a, b) { return a.percent - b.percent });
+                var result = bgs.map(function (value) {
+                    return value.color + ' ' + (value.percent * 100) + '%'
+                }).join(',');
+
+                var bgImage = 'linear-gradient(' + (180 + deg) + 'deg, ' + result + ')';
+                $('.linear-gradient').css('background-image', bgImage);
+                $('.container').css('background-image', bgImage);
+                $('.output p').text(bgImage);
+            };
+
+            var addPoint = function (r, bg) {
+                points.push(Point(r, bg));
+            };
+
+            var setDeg = function (_deg_) {
+                deg = _deg_;
+            };
+
+            var drawPoints = function () {
+                $('.linear-gradient .points').html('');
+                var _this = this;
+
+                // 1. 绘制point
+                points.forEach(function (point, index) {
+                    var $point = $("<div class='point'></div>");
+                    $point.css('width', point.width + 'px');
+                    $point.css('height', point.height + 'px');
+                    $point.css('background', point.bg);
+                    $point.css('top', point.top(deg) + 'px');
+                    $point.css('left', point.left(deg) + 'px');
+                    $('.linear-gradient .points').append($point);
+
+                    $point.mousedown(function (e) {
+                        e.preventDefault();
+
+                        document.onmouseup = function(){
+                            document.onmouseup = null;
+                            document.onmousemove = null;
+                        };
+
+                        document.onmousemove = function(ev){
+                            var a = ev.clientX - circle.center.X;
+                            var b = ev.clientY - circle.center.Y;
+                            var deg = Math.atan(Math.abs(a / b)) / (Math.PI / 180);
+
+                            if (a > 0 && b < 0) deg = deg;
+                            if (a > 0 && b > 0) deg = 180 - deg;
+                            if (a < 0 && b > 0) deg = 180 + deg;
+                            if (a < 0 && b < 0) deg = 360 - deg;
+
+                            _this.setDeg(deg);
+                            _this.drawPoints();
+
+                            $line.css('transform', 'rotate(' + deg + 'deg)');
+                        };
+                    });
+
+                    // 鼠标单击事件修改当前point的颜色值
+                    $point.click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        $('.colors').toggleClass('show');
+                        selectColorCallback = function (color) {
+                            point.bg = color;
+                            _this.drawPoints();
+                        };
+                    });
+
+                    // 阻止系统默认右键行为
+                    $point.contextmenu(function (e) {
+                        e.preventDefault();
+                    });
+                    // // 鼠标右键打开颜色板，在当前point处添加一个新的point
+                    // $point.mouseup(function (e) {
+                    //     e.preventDefault();
+                    //     e.stopPropagation();
+                    //
+                    //     if (!e) e = window.event;
+                    //     if (e.button === 2) {
+                    //         $('.colors').toggleClass('show');
+                    //
+                    //         selectColorCallback = function (color) {
+                    //             _this.addPoint(point.r, color);
+                    //             _this.drawPoints();
+                    //         };
+                    //     }
+                    // })
+                });
+
+                // 2. 绘制背景
+                _this.drawBg();
+
+                // 3. 为line绑定事件
+                $line.click(function (e) {
+                    $('.colors').toggleClass('show');
+                    var x = e.clientX;
+                    var y = e.clientY;
+                    var a = x - circle.center.X;
+                    var b = y - circle.center.Y;
+                    var r = Math.sqrt(a * a + b * b);
+
+                    selectColorCallback = function (color) {
+                        _this.addPoint(r, color);
+                        line.drawPoints();
+                    };
+                });
+            };
+
+            return {
+                addPoint: addPoint,
+                setDeg: setDeg,
+                drawBg: drawBg,
+                drawPoints: drawPoints
+            }
+        }
+
+        var circle = Circle();
+        var line  = Line(circle);
+        line.addPoint(circle.R, '#293462');
+        line.addPoint(-circle.R, '#a0f0b6');
+        line.drawPoints();
+
+        colors(line);
+    });
+</script>
